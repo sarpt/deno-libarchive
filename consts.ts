@@ -6,3 +6,5 @@ export const defaultLibarchivePath = "/usr/lib/libarchive.so"; // ldconfig alias
 export const defaultSkippableFormats = [
   ArchiveFormat.ARCHIVE_FORMAT_MTREE,
 ];
+
+export const blockSize = 10240; // taken from docs

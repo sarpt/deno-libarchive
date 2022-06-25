@@ -1,5 +1,9 @@
 import * as path from "https://deno.land/std@0.125.0/path/mod.ts";
-import { defaultLibarchivePath, defaultSkippableFormats } from "./consts.ts";
+import {
+  blockSize,
+  defaultLibarchivePath,
+  defaultSkippableFormats,
+} from "./consts.ts";
 import { symbols } from "./symbols.ts";
 import {
   ArchiveContentsEntry,
@@ -12,24 +16,18 @@ import {
   Options,
   Result,
 } from "./types.ts";
-
-const blockSize = 10240; // taken from docs
-
-function makeCString(str: string): Uint8Array {
-  return new Uint8Array([
-    ...new TextEncoder().encode(str),
-    0,
-  ]);
-}
+import { makeCString } from "./utils.ts";
 
 export class LibArchive {
   private lib: LibArchiveDynamicLibrary;
   private skippableArchiveFormats: ArchiveFormat[];
+  public readonly libpath: string;
 
   constructor({
     libpath = defaultLibarchivePath,
     skippableArchiveFormats = defaultSkippableFormats,
   }: Options = {}) {
+    this.libpath = libpath;
     this.lib = Deno.dlopen(libpath, symbols);
     this.skippableArchiveFormats = skippableArchiveFormats;
   }
