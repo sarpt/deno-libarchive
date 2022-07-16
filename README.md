@@ -37,3 +37,7 @@ A `LibArchive` class wrapping `libarchive` FFI implementation.
 
 - `unstable`
 - `allow-ffi`
+
+### known issues
+
+The main issue currently is that the lib always consumes disk-space when walking recursively through the archive. While this is not a bad thing for all use-cases, in-memory handling of small archives/files could speed up the process and relieve the disk from taking part in the process. `libarchive` seems to have methods that handle in-memory archive operations but those are not used with FFI in this library yet. It's a TODO.
